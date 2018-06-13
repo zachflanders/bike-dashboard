@@ -1,0 +1,27 @@
+{
+  "name": "bike-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^1.2.0",
+    "@material-ui/icons": "^1.1.0",
+    "bootstrap": "^4.1.1",
+    "d3": "^5.4.0",
+    "jquery": "^3.3.1",
+    "openlayers": "^4.6.5",
+    "popper": "^1.0.1",
+    "popper.js": "^1.14.3",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:8000/"
+
+
+}
