@@ -13,6 +13,8 @@
     "popper.js": "^1.14.3",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-flexbox-grid": "^2.1.2",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4"
   },
   "scripts": {
@@ -22,6 +24,4 @@
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:8000/"
-
-
 }

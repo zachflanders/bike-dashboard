@@ -1,3 +1,8 @@
+html, body, #root, main{
+  height: 100%;
+}
+
+
 .App {
   text-align: center;
 }
@@ -27,9 +32,17 @@
   to { transform: rotate(360deg); }
 }
 
+.MuiAppBar-positionStatic-5{
+  position: relative !important;
+}
+
 #map{
-  height:350px;
-  width:100%;
+  position: relative;
+  top:0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  min-height: 350px;
   background-color: #f5f5f5;
 }
 
@@ -43,6 +56,10 @@
   text-anchor: end;
 }
 
+div[class*="MuiCard-root"]{
+  margin-bottom: 16px;
+}
+
 
 
 .bar {
@@ -53,6 +70,16 @@
   fill:#386890;
 }
 
-.axis--x path {
+.axis--y path {
+  display: none;
+}
+
+.grid line {
+  stroke: lightgrey;
+  stroke-opacity: 0.7;
+  shape-rendering: crispEdges;
+}
+
+.grid path {
   display: none;
 }

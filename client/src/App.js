@@ -46,6 +46,7 @@ import logo from './images/BWKClogo.png';
 import profile from './images/profile.jpg';
 
 import RegionalBikeFacilitiesChart from './infographics/regionalBikeFacilitiesChart.js'
+import Main from './main.js';
 
 const theme = createMuiTheme({
   palette: {
@@ -71,157 +72,10 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <AppBar
-          position='static'
-          color='#ffffff'
-        >
-          <Toolbar>
-            <img src={logo} height={40} />
-            <div style={{marginLeft:'auto', display:'flex', justifyContent:'center'}}>
-              <Button>
-                <Typography style={{marginRight:'10px'}}>
-                  Zach Flanders
-                </Typography>
-                <Avatar src={profile} />
-              </Button>
-            </div>
-          </Toolbar>
-
-        </AppBar>
-        <div style={{padding:'16px'}}>
-        <Grid container
-          spacing={16}
-          justify='center'
-          align='left'
-        >
-          <Grid item lg={2} md={2} sm={2}>
-          <Typography variant='headline' style={{textAlign:'center'}}>
-            Community Dashboard
-          </Typography >
-          <br />
-          <Divider />
-          <List component="nav">
-            <ListItem button>
-              <ListItemIcon>
-                <MapIcon />
-              </ListItemIcon>
-              <ListItemText primary="Maps" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <ChartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Charts" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <ImageIcon />
-              </ListItemIcon>
-              <ListItemText primary="Images" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <StoryIcon />
-              </ListItemIcon>
-              <ListItemText primary="Stories" />
-            </ListItem>
-          </List>
-          </Grid>
-
-          <Grid item lg={5} md={5} sm={10} align='left'>
-            <Card>
-              <CardHeader
-                avatar={
-                  <Avatar>
-                    <MapIcon />
-                  </Avatar>
-                }
-                action={
-                  <IconButton>
-                    <FullscreenIcon />
-                  </IconButton>
-                }
-                title='Regional Bike Network'
-                subheader='Updated: June 6, 2018'
-              />
-              <div id='map'></div>
-              <CardContent>
-              <Typography variant='caption'>
-                Source: OpenStreetMap Contributors, Municipal Data.
-              </Typography>
-                <Typography>
-                  This regional map of Kansas City bike infrastructure is maintained by BikeWalkKC.
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <IconButton size="small"><DownloadIcon /></IconButton>
-                <IconButton size="small"><ShareIcon /></IconButton>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item lg={5} md={5} sm={10} align='left'>
-            <Card>
-
-              <CardHeader
-
-                avatar={
-                  <Avatar>
-                    <ChartIcon />
-                  </Avatar>
-                }
-                action={
-                  <IconButton>
-                    <FullscreenIcon />
-                  </IconButton>
-                }
-                title='Regional Bike Facilities'
-                subheader='Updated: June 6, 2018'
-              />
-              <CardContent>
-              <RegionalBikeFacilitiesChart />
-
-              </CardContent>
-              <CardActions>
-                <IconButton size="small"><DownloadIcon /></IconButton>
-                <IconButton size="small"><ShareIcon /></IconButton>
-              </CardActions>
-            </Card>
-          </Grid>
-        </Grid>
-        </div>
-        <br />
-      </ MuiThemeProvider>
+      <Main />
     );
   }
-  componentDidMount(){
 
-
-    var layers = [
-      new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-          url: 'http://ec2-34-214-28-139.us-west-2.compute.amazonaws.com/geoserver/wms',
-          params: {'LAYERS': 'Mapalize:KCBikeFacilities', 'TILED': true},
-          serverType: 'geoserver',
-          transition: 0
-        })
-      })
-    ];
-    var map = new ol.Map({
-        target: 'map',
-        layers: layers,
-        view: new ol.View({
-          center: ol.proj.fromLonLat([-94.6, 39.1]),
-          zoom: 12
-        }),
-        controls: [
-          new ol.control.Zoom
-        ]
-      });
-
-
-
-    }
   }
 
 
