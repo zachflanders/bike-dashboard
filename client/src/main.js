@@ -95,7 +95,11 @@ class Main extends Component {
     var title = '';
     var home = true;
     if(this.props.location.pathname=='/regional-bike-map'){
-      title = "Regional Bike Facilities Map"
+      title = "Regional Bike Network"
+      home = false;
+    }
+    if(this.props.location.pathname=='/regional-bike-chart'){
+      title = "Regional Bike Facilities"
       home = false;
     }
     return (
@@ -104,6 +108,7 @@ class Main extends Component {
         <Switch>
           <Route exact path='/' component={this.dashboard}/>
           <Route path='/regional-bike-map' component={RegionalBikeMap}/>
+          <Route path='/regional-bike-chart' component={RegionalBikeFacilitiesChart}/>
         </Switch>
       </main>
 

@@ -92,6 +92,7 @@ class RegionalBikeMap extends Component {
 
 
     }
+    
 
   }
 

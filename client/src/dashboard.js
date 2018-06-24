@@ -124,9 +124,11 @@ class Dashboard extends Component {
                       </Avatar>
                     }
                     action={
-                      <IconButton>
-                        <Link to='/regional-bike-map' onClick={this.props.handleClick}><FullscreenIcon /></Link>
-                      </IconButton>
+                        <Link to='/regional-bike-map' onClick={this.props.handleClick}>
+                          <IconButton>
+                            <FullscreenIcon />
+                          </IconButton>
+                        </Link>
                     }
                     title='Regional Bike Network'
                     subheader='Updated: June 6, 2018'
@@ -157,18 +159,16 @@ class Dashboard extends Component {
                     </Avatar>
                   }
                   action={
-                    <IconButton>
-                      <Link to='/'><FullscreenIcon /></Link>
-
-                    </IconButton>
+                    <Link to='/regional-bike-chart' onClick={this.props.handleClick}>
+                      <IconButton>
+                        <FullscreenIcon />
+                      </IconButton>
+                    </Link>
                   }
                   title='Regional Bike Facilities'
                   subheader='Updated: June 6, 2018'
                 />
-                <CardContent>
                   <RegionalBikeFacilitiesChart />
-
-                </CardContent>
                 <CardActions>
                   <IconButton size="small"><DownloadIcon /></IconButton>
                   <IconButton size="small"><ShareIcon /></IconButton>

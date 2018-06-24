@@ -6,6 +6,8 @@ import '../App.css';
 import logo from '../images/BWKClogo.png';
 import profile from '../images/profile.jpg';
 
+import { Link } from 'react-router-dom'
+
 
 import blue from '@material-ui/core/colors/blue';
 import AppBar from '@material-ui/core/AppBar';
@@ -24,6 +26,8 @@ import ImageIcon from '@material-ui/icons/Image';
 import StoryIcon from '@material-ui/icons/LibraryBooks';
 import ShareIcon from '@material-ui/icons/Share';
 import DownloadIcon from '@material-ui/icons/GetApp';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -59,8 +63,9 @@ class Nav extends Component {
         color='#ffffff'
       >
         <Toolbar>
-          <img src={logo} height={40} />
-          <Typography>
+          {this.props.home == true  && <img src={logo} height={40} /> }
+          {this.props.home == false  && <div><Link to='/'><IconButton><ArrowBack /></IconButton></Link>&nbsp;</div> }
+          <Typography variant='title'>
             {this.props.title}
           </Typography>
           <div style={{marginLeft:'auto', display:'flex', justifyContent:'center'}}>
