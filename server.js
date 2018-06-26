@@ -56,6 +56,11 @@ app.get('/api/hello', function(req, res){
 
 });
 
+app.route('/*')
+  .get((req, res) => {
+    res.sendFile('./client/public/index.html'));
+  });
+
 // This will be our application entry. We'll setup our server here.
 const http = require('http');
 
