@@ -14,8 +14,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const sequelize = new Sequelize(db.database, db.username, db.password, {
-  host: db.url,
+const sequelize = new Sequelize(process.env.DATABASE, process.env.USERNAME, process.env.PASSWORD, {
+  host: process.env.HOSTURL,
   dialect: 'postgres',
   ssl: true,
   dialectOptions: {

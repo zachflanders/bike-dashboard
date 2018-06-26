@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client":"cd client && yarn start",
+    "client": "cd client && yarn start",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "build": "react-scripts build"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "nodemon": "^1.17.5",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
+    "react-scripts": "^1.1.4",
     "sequelize": "^4.37.10"
   },
   "devDependencies": {
