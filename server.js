@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
-//const db             = require('./config/db');
+const db   = require('./config/db');
 
 // Set up the express app
 const app = express();
@@ -14,8 +14,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const sequelize = new Sequelize(process.env.DATABASE, process.env.USERNAME, process.env.PASSWORD, {
-  host: process.env.HOSTURL,
+const sequelize = new Sequelize(process.env.DATABASE || db.database, process.env.USERNAME || db.username, process.env.PASSWORD || db.password, {
+  host: process.env.HOSTURL || db.url,
   dialect: 'postgres',
   ssl: true,
   dialectOptions: {
@@ -43,6 +43,9 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+  }
 
 
 
@@ -56,10 +59,12 @@ app.get('/api/hello', function(req, res){
 
 });
 
+/*
 app.route('/*')
   .get((req, res) => {
     res.sendFile('./client/public/index.html'));
   });
+  */
 
 // This will be our application entry. We'll setup our server here.
 const http = require('http');
