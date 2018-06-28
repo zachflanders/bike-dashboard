@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
-//const db   = require('./config/db');
+const db   = require('./config/db');
 
 // Set up the express app
 const app = express();
@@ -51,6 +51,7 @@ sequelize
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 app.get('/api/hello', function(req, res){
+
   sequelize.query("SELECT loc1_faca, distance, city, state FROM KCBikeFacilities ").then(bikefacilities => {
     res.status(200).send({
       data: bikefacilities,
