@@ -137,6 +137,54 @@ class Dashboard extends Component {
                   </CardActions>
                 </Card>
               </Col>
+              <Col lg={6} md={6} sm={12}>
+                <Card>
+                  <CardHeader
+                    avatar={
+                      <Avatar>
+                        <ChartIcon />
+                        </Avatar>
+                    }
+                    action={
+                      <Link to='/regional-bike-chart' onClick={this.props.handleClick}>
+                        <IconButton>
+                          <FullscreenIcon />
+                          </IconButton>
+                          </Link>
+                    }
+                    title='Biking Mode Share'
+                    subheader='Updated:'
+                  />
+                  <CardActions>
+                    <IconButton size="small"><DownloadIcon /></IconButton>
+                    <IconButton size="small"><ShareIcon /></IconButton>
+                  </CardActions>
+                </Card>
+              </Col>
+              <Col lg={6} md={6} sm={12}>
+                <Card>
+                  <CardHeader
+                    avatar={
+                      <Avatar>
+                        <ChartIcon />
+                        </Avatar>
+                    }
+                    action={
+                      <Link to='/regional-bike-chart' onClick={this.props.handleClick}>
+                        <IconButton>
+                          <FullscreenIcon />
+                          </IconButton>
+                          </Link>
+                    }
+                    title='Walking Mode Share'
+                    subheader='Updated:'
+                  />
+                  <CardActions>
+                    <IconButton size="small"><DownloadIcon /></IconButton>
+                    <IconButton size="small"><ShareIcon /></IconButton>
+                  </CardActions>
+                </Card>
+              </Col>
             </Row>
             </Col>
           </Row>
