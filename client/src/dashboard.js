@@ -26,6 +26,8 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import RegionalBikeFacilitiesChart from './infographics/regionalBikeFacilitiesChart.js'
 import RegionalBikeMap from './infographics/regionalBikeMap.js'
+import BikeModeShare from './infographics/bikeModeShare.js'
+
 
 const theme = createMuiTheme({
   palette: {
@@ -80,7 +82,7 @@ class Dashboard extends Component {
             <Col lg={10} md={9} sm={12}>
               <Row>
                 <Col lg={6} md={6} sm={12}>
-                <Card style={{paddingBottom:'16px'}}>
+                <Card style={{paddingBottom:'16px', marginBottom: '16px'}}>
                   <CardHeader
                     avatar={
                       <Avatar>
@@ -113,7 +115,7 @@ class Dashboard extends Component {
                 </Card>
               </Col>
               <Col lg={6} md={6} sm={12}>
-                <Card>
+                <Card style={{marginBottom: '16px'}}>
                   <CardHeader
                     avatar={
                       <Avatar>
@@ -138,7 +140,7 @@ class Dashboard extends Component {
                 </Card>
               </Col>
               <Col lg={6} md={6} sm={12}>
-                <Card>
+                <Card style={{marginBottom: '16px'}}>
                   <CardHeader
                     avatar={
                       <Avatar>
@@ -155,6 +157,7 @@ class Dashboard extends Component {
                     title='Biking Mode Share'
                     subheader='Updated:'
                   />
+                  <BikeModeShare />
                   <CardActions>
                     <IconButton size="small"><DownloadIcon /></IconButton>
                     <IconButton size="small"><ShareIcon /></IconButton>
@@ -162,7 +165,7 @@ class Dashboard extends Component {
                 </Card>
               </Col>
               <Col lg={6} md={6} sm={12}>
-                <Card>
+                <Card style={{marginBottom: '16px'}}>
                   <CardHeader
                     avatar={
                       <Avatar>
