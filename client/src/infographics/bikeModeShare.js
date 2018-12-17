@@ -1,6 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
-import BikeModeCSV from './../data/bikemode.csv';
+import * as CSV from 'csvtojson';
+//import BikeModeCSV from './../data/bikemode.csv';
 
 class BikeModeShare extends React.Component {
   constructor(props) {
@@ -12,12 +13,14 @@ class BikeModeShare extends React.Component {
     this.renderChart();
   }
   renderChart(){
-    var chartDiv = document.getElementsByClassName("bikeModeShareSvg")[0];
-    var svg = d3.select(chartDiv),
-      margin = {top: 20, right: 80, bottom: 30, left: 50},
-      width = svg.attr("width") - margin.left - margin.right,
-      height = svg.attr("height") - margin.top - margin.bottom,
-      g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var chartDiv = document.getElementsByClassName("bikeModeShareSvg")[0] || 0;
+    if(chartDiv != 0){
+      var svg = d3.select(chartDiv),
+        margin = {top: 20, right: 80, bottom: 30, left: 50},
+        width = svg.attr("width") - margin.left - margin.right,
+        height = svg.attr("height") - margin.top - margin.bottom,
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      }
 
     var parseTime = d3.timeParse("%Y");
 
@@ -29,14 +32,31 @@ class BikeModeShare extends React.Component {
       .curve(d3.curveBasis)
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.bikeshare); });
-      d3.csv(BikeModeCSV, type, function(error, data) {
-        console.log(error);
+
+      Promise.all([
+        "bikemode.csv",
+      ].map(function(url) {
+        return fetch(url).then(function(response) {
+          return response.ok ? response.text() : Promise.reject(response.status);
+        }).then(function(text) {
+          return d3.csvParse(text);
+        });
+      })).then(function(data) {
+        console.log(data);
+
+      });
+
+      /*
+
+
+      d3.csv("bikemode.csv", type, function(error, data) {
         if (error) throw error;
+
         var cities = data.columns.slice(1).map(function(id) {
           return {
             id: id,
             values: data.map(function(d) {
-              return {date: d.Year, bikeshare: d[id]};
+              return {date: d.date, temperature: d[id]};
             })
           };
         });
@@ -82,8 +102,10 @@ class BikeModeShare extends React.Component {
             .attr("dy", "0.35em")
             .style("font", "10px sans-serif")
             .text(function(d) { return d.id; });
-      });
 
+          });
+
+          */
       function type(d, _, columns) {
         d.date = parseTime(d.date);
         for (var i = 1, n = columns.length, c; i < n; ++i) d[c = columns[i]] = +d[c];

@@ -24,7 +24,7 @@ class RegionalBikeFacilitiesChart extends React.Component {
     this.renderChart(event.target.value);
   };
   callApi = async () => {
-    const response = await fetch('/api/hello');
+    const response = await fetch('/api/bikefacilities');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
@@ -33,9 +33,9 @@ class RegionalBikeFacilitiesChart extends React.Component {
     if(data){
       this.setState({data:data});
     }
-    var chartDiv = document.getElementsByClassName("svg")[0];
+    var chartDiv = document.getElementsByClassName("svg")[0] || 0;
     var svg = d3.select(chartDiv);
-    svg.selectAll("*").remove();
+    if(chartDiv != 0){svg.selectAll("*").remove();};
     var  margin = {top: 0, right: 16, bottom: 20, left: 110};
     var width = chartDiv.clientWidth - margin.left - margin.right;
     var height = chartDiv.clientHeight - margin.top - margin.bottom;

@@ -18,11 +18,6 @@ import StoryIcon from '@material-ui/icons/LibraryBooks';
 import ShareIcon from '@material-ui/icons/Share';
 import DownloadIcon from '@material-ui/icons/GetApp';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import RegionalBikeFacilitiesChart from './infographics/regionalBikeFacilitiesChart.js'
 import RegionalBikeMap from './infographics/regionalBikeMap.js'
@@ -43,46 +38,9 @@ class Dashboard extends Component {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <div style={{paddingTop:'16px'}}>
-        <Grid fluid>
-          <Row>
-            <Col lg={2} md={3} sm={12}>
-              <Typography variant='headline' style={{textAlign:'center'}}>
-                Community Dashboard
-              </Typography >
-              <br />
-              <Divider />
-              <List component="nav">
-                <ListItem button>
-                  <ListItemIcon>
-                    <MapIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Maps" />
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                    <ChartIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Charts" />
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                    <ImageIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Images" />
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                    <StoryIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Stories" />
-                </ListItem>
-              </List>
-            </Col>
-            <Col lg={10} md={9} sm={12}>
-              <Row>
-                <Col lg={6} md={6} sm={12}>
-                <Card style={{paddingBottom:'16px', marginBottom: '16px'}}>
+
+              <div className="item">
+                <Card>
                   <CardHeader
                     avatar={
                       <Avatar>
@@ -90,14 +48,13 @@ class Dashboard extends Component {
                       </Avatar>
                     }
                     action={
-                        <Link to='/regional-bike-map' onClick={this.props.handleClick}>
+                        <Link to='/bike-facilities/regional-bike-map' onClick={this.props.handleClick}>
                           <IconButton>
                             <FullscreenIcon />
                           </IconButton>
                         </Link>
                     }
                     title='Regional Bike Network'
-                    subheader='Updated: June 6, 2018'
                   />
                   <RegionalBikeMap />
                   <CardContent>
@@ -113,9 +70,10 @@ class Dashboard extends Component {
                     <IconButton size="small"><ShareIcon /></IconButton>
                   </CardActions>
                 </Card>
-              </Col>
-              <Col lg={6} md={6} sm={12}>
-                <Card style={{marginBottom: '16px'}}>
+                </div>
+                <div className="item">
+
+                <Card >
                   <CardHeader
                     avatar={
                       <Avatar>
@@ -123,14 +81,13 @@ class Dashboard extends Component {
                         </Avatar>
                     }
                     action={
-                      <Link to='/regional-bike-chart' onClick={this.props.handleClick}>
+                      <Link to='/bike-facilities/regional-bike-chart' onClick={this.props.handleClick}>
                         <IconButton>
                           <FullscreenIcon />
-                          </IconButton>
-                          </Link>
+                        </IconButton>
+                      </Link>
                     }
                     title='Regional Bike Facilities'
-                    subheader='Updated: June 6, 2018'
                   />
                   <RegionalBikeFacilitiesChart />
                   <CardActions>
@@ -138,9 +95,10 @@ class Dashboard extends Component {
                     <IconButton size="small"><ShareIcon /></IconButton>
                   </CardActions>
                 </Card>
-              </Col>
-              <Col lg={6} md={6} sm={12}>
-                <Card style={{marginBottom: '16px'}}>
+                </div>
+                <div className="item">
+
+                <Card >
                   <CardHeader
                     avatar={
                       <Avatar>
@@ -163,9 +121,10 @@ class Dashboard extends Component {
                     <IconButton size="small"><ShareIcon /></IconButton>
                   </CardActions>
                 </Card>
-              </Col>
-              <Col lg={6} md={6} sm={12}>
-                <Card style={{marginBottom: '16px'}}>
+                </div>
+                <div className="item">
+
+                <Card >
                   <CardHeader
                     avatar={
                       <Avatar>
@@ -187,12 +146,10 @@ class Dashboard extends Component {
                     <IconButton size="small"><ShareIcon /></IconButton>
                   </CardActions>
                 </Card>
-              </Col>
-            </Row>
-            </Col>
-          </Row>
-          </Grid>
-        </div>
+                </div>
+
+
+
         <br />
       </ MuiThemeProvider>
     );

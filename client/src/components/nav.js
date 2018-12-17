@@ -23,19 +23,12 @@ class Nav extends Component {
         color='inherit'
       >
         <Toolbar>
-          {this.props.home === true  && <img src={logo} height={40} alt='BikeWalkKC Logo'/> }
+          {this.props.home === true  && <Link to='/'><img src={logo} height={40} alt='BikeWalkKC Logo'/></Link> }
           {this.props.home === false  && <div><Link to='/'><IconButton><ArrowBack /></IconButton></Link>&nbsp;</div> }
           <Typography variant='title'>
             {this.props.title}
           </Typography>
-          <div style={{marginLeft:'auto', display:'flex', justifyContent:'center'}}>
-            <Button>
-              <Typography style={{marginRight:'10px'}}>
-                Zach Flanders
-              </Typography>
-              <Avatar src={profile} />
-            </Button>
-          </div>
+
         </Toolbar>
       </AppBar>
     );

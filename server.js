@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
-//const db   = require('./config/db');
+const db   = require('./config/db');
 
 // Set up the express app
 const app = express();
@@ -50,7 +50,18 @@ sequelize
 
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-app.get('/api/hello', function(req, res){
+app.get('/api/bcycle', function(req, res){
+  console.log("params: ",req.query.bounds);
+  var bounds = req.query.bounds;
+  sequelize.query("SELECT latitude, longitude FROM bikeshare WHERE ST_Contains(ST_MakeEnvelope("+bounds[0]+", "+bounds[1]+","+bounds[2]+", "+bounds[3]+",32610), geom) ORDER BY random() LIMIT 10000;").then(bikefacilities => {
+    res.status(200).send({
+      data: bikefacilities,
+    })
+  })
+
+});
+
+app.get('/api/bikefacilities', function(req, res){
 
   sequelize.query("SELECT loc1_faca, distance, city, state FROM KCBikeFacilities ").then(bikefacilities => {
     res.status(200).send({
@@ -59,6 +70,8 @@ app.get('/api/hello', function(req, res){
   })
 
 });
+
+
 
 /*
 app.route('/*')
