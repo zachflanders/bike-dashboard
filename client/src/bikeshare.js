@@ -61,11 +61,9 @@ class Bikeshare extends Component {
                   <BikeShareHeatmap />
                   <CardContent>
                   <Typography variant='caption'>
-                    Source: OpenStreetMap Contributors, Municipal Data.
+                    Source: Bcycle, OpenStreetMap Contributors.
                   </Typography>
-                    <Typography>
-                      This regional map of Kansas City bike infrastructure is maintained by BikeWalkKC.
-                    </Typography>
+
                   </CardContent>
                   <CardActions>
                     <IconButton size="small"><DownloadIcon /></IconButton>

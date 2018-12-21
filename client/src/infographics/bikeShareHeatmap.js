@@ -3,15 +3,21 @@ import './../App.css';
 import ol from 'openlayers';
 import 'openlayers/dist/ol.css';
 import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Slider from '@material-ui/lab/Slider';
-
+import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
  var map = {};
  var myStyle = new ol.style.Style({
    stroke: new ol.style.Stroke({
-     color: 'rgba(0, 0, 0, 0.5)', width: 1
+     color: 'rgba(0, 0, 0, 1)', width: 0.4
    }),
    fill: new ol.style.Fill({
             color: 'rgba(0, 0, 0, 0)'
@@ -19,26 +25,19 @@ import Slider from '@material-ui/lab/Slider';
 
  });
  var points = [];
-
-
  var coord = ol.proj.fromLonLat([-94.6, 39.1]);
-
  var point = new ol.geom.Point(coord);
- console.log(coord)
  var pointFeature = new ol.Feature({
   geometry: point
  });
  points.push(pointFeature);
-
  var vectorSource = new ol.source.Vector({
    features: points
  });
-
  var vectorSource2 = new ol.source.Vector({
    features: {}
 
  });
-
  var HeatmapLayer = new ol.layer.Heatmap({
    source: vectorSource,
    blur: 5,
@@ -48,19 +47,22 @@ import Slider from '@material-ui/lab/Slider';
  var extentLayer = new ol.layer.Vector({
    source: vectorSource2,
    style: myStyle
-
-
  });
-
-
 class BikeShareHeatmap extends Component {
   constructor(props) {
     super(props);
-    this.state = {loaded: 'loading...', radius: 0.75, blur: 5};
+    this.state = {
+      message: 'loading...',
+      radius: 0.75,
+      blur: 5,
+      startDate: new Date(2015, 3, 1).toISOString().slice(0,10),
+      endDate: new Date(2015, 5, 29).toISOString().slice(0,10)
+    };
     this.reloadResults = this.reloadResults.bind(this);
     this.changeRadius = this.changeRadius.bind(this);
     this.changeBlur = this.changeBlur.bind(this);
-
+    this.changeStartDate = this.changeStartDate.bind(this);
+    this.changeEndDate = this.changeEndDate.bind(this);
   }
 
   changeRadius(event, value){
@@ -77,20 +79,45 @@ class BikeShareHeatmap extends Component {
     HeatmapLayer.setBlur(value);
   }
 
+  changeStartDate(event, value){
+    var newDate = event.target.value;
+    this.setState(state => ({
+      startDate: newDate
+    }));
+  }
+  changeEndDate(event, value){
+    var newDate = event.target.value;
+    this.setState(state => ({
+      endDate: newDate
+    }));
+  }
+
   reloadResults() {
     var self = this;
     this.setState(state => ({
-      loaded: 'loading...'
+      message: 'loading...'
     }));
+    console.log(this.state);
     var bounds = ol.proj.transformExtent(map.getView().calculateExtent(map.getSize()),'EPSG:3857','EPSG:4326');
+    var startDate = self.state.startDate.slice(5,7)+"/"+self.state.startDate.slice(8,10)+"/"+self.state.startDate.slice(0,4);
+    var endDate = self.state.endDate.slice(5,7)+"/"+self.state.endDate.slice(8,10)+"/"+self.state.endDate.slice(0,4);
 
+    console.log(startDate);
     axios.get('/api/bcycle', {
       params: {
-        bounds: bounds
+        bounds: bounds,
+        startDate: startDate,
+        endDate: endDate,
       }
     })
     .then(function(response){
-      self.setState({loaded:''});
+      if(response.data.data[0][0].full_count > 1000){
+        self.setState({message:'Max results exceeded. Displaying 1000 of '+response.data.data[0][0].full_count+' points. (random sample)'});
+      }
+      else{
+        self.setState({message:response.data.data[0][0].full_count+' points.'});
+
+      }
       vectorSource.clear();
       response.data.data[0].forEach(function(item){
         var coord2 = [Number(item.longitude),Number(item.latitude)]
@@ -113,13 +140,29 @@ class BikeShareHeatmap extends Component {
       <div id='map'></div>
       <CardContent>
         <div className='wrapper'>
-          <div className='item' style={{textAlign:'left'}}>
+          <div className='col3' style={{textAlign:'left'}}>
+          <FormControlLabel
+            disabled
+            control={<Checkbox checked value={false} />}
+            label="Limit results to current map extent"
+          />
+          <br />
           <Button variant="contained" onClick={this.reloadResults}>
             Reload Results
           </Button>
           <br />
           <br />
+          {this.state.message}
+
+          </div>
+          <div className='col3' style={{textAlign:'left'}}>
+          <Typography variant='headline'>
+          Adjust Heat
+          </Typography>
+          <Divider />
+          <br />
           Radius: {this.state.radius}
+          <br />
           <br />
           <Slider
             value={this.state.radius}
@@ -131,23 +174,56 @@ class BikeShareHeatmap extends Component {
           <br />
           Blur: {this.state.blur}
           <br />
+          <br />
           <Slider
           value={this.state.blur}
            min={0}
            max={15}
            onChange={this.changeBlur}/>
           <br />
-          {this.state.loaded}
           </div>
-          <div className='item'>&nbsp;
+          <div className='col3' style={{textAlign:'left'}}>
+          <Typography variant='headline'>
+          Select Date Range
+          </Typography>
+          <Divider />
+          <br />
+          <form noValidate>
+            <TextField
+              id="datetime-local"
+              label="Start Date"
+              type="date"
+              value = {this.state.startDate}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange = {this.changeStartDate}
+            />
+          </form>
+          <br />
+          <br />
+          <form noValidate>
+            <TextField
+              id="datetime-local"
+              label="End Date"
+              type="date"
+              value={this.state.endDate}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange = {this.changeEndDate}
+            />
+          </form>
           </div>
         </div>
       </CardContent>
       </div>
+
     );
   }
 
   componentDidMount(){
+
     var self =this;
     var vectorLayer = new ol.layer.Vector({
       source: vectorSource,
@@ -181,13 +257,16 @@ class BikeShareHeatmap extends Component {
       });
 
       var bounds = ol.proj.transformExtent(map.getView().calculateExtent(map.getSize()),'EPSG:3857','EPSG:4326');
-
+      var startDate = this.state.startDate.slice(5,7)+"/"+this.state.startDate.slice(8,10)+"/"+this.state.startDate.slice(0,4);
+      var endDate = this.state.endDate.slice(5,7)+"/"+this.state.endDate.slice(8,10)+"/"+this.state.endDate.slice(0,4);
 
 
 
       axios.get('/api/bcycle', {
         params: {
-          bounds: bounds
+          bounds: bounds,
+          startDate: startDate,
+          endDate: endDate
         }
       })
       .then(function(response){
@@ -211,8 +290,15 @@ class BikeShareHeatmap extends Component {
 
         });
         */
-        self.setState({loaded:''});
+        if(response.data.data[0][0].full_count > 1000){
+          self.setState({message:'Max results exceeded. Displaying 1000 of '+response.data.data[0][0].full_count+' points. (random sample)'});
+        }
+        else{
+          self.setState({message:response.data.data[0][0].full_count+' points.'});
 
+        }
+
+        vectorSource.clear();
         response.data.data[0].forEach(function(item){
           var coord2 = [Number(item.longitude),Number(item.latitude)]
           var feature2 = new ol.Feature(
@@ -226,6 +312,10 @@ class BikeShareHeatmap extends Component {
 
 
       });
+      var extent = ol.geom.Polygon.fromExtent(map.getView().calculateExtent(map.getSize()));
+      var feature3 = new ol.Feature(extent);
+      vectorSource2.clear();
+      vectorSource2.addFeature(feature3);
 
     }
   }
