@@ -79,13 +79,13 @@ app.get('/api/bikefacilities', function(req, res){
 });
 
 
+if (process.env.NODE_ENV === 'production') {
+  app.route('/*')
+    .get(function(req, res){
+      res.sendFile('./client/build/index.html');
+    });
+};
 
-/*
-app.route('/*')
-  .get((req, res) => {
-    res.sendFile('./client/public/index.html'));
-  });
-  */
 
 // This will be our application entry. We'll setup our server here.
 const http = require('http');
