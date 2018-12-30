@@ -37,6 +37,7 @@ class Bikeshare extends Component {
     super(props);
     this.state = {};
   }
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>
@@ -50,7 +51,7 @@ class Bikeshare extends Component {
                       </Avatar>
                     }
                     action={
-                        <Link to='/bike-share/bike-share-heatmap' onClick={this.props.handleClick}>
+                        <Link to='/bike-share/bike-share-heatmap' onClick={this.fullScreen}>
                           <IconButton>
                             <FullscreenIcon />
                           </IconButton>

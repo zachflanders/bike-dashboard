@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
-//const db   = require('./config/db');
+const db   = require('./config/db');
 
 // Set up the express app
 const app = express();
@@ -55,14 +55,25 @@ app.get('/api/bcycle', function(req, res){
   var bounds = req.query.bounds;
   var startDate = req.query.startDate;
   var endDate = req.query.endDate;
+  /*
   var query = "SELECT count(latitude) OVER() as full_count, latitude, longitude, \"rental dat\" FROM bikeshare WHERE ST_Contains(ST_MakeEnvelope("
     +bounds[0]+", "+bounds[1]+","+bounds[2]+", "+bounds[3]+", 4326), geom)"
     +" AND to_date(\"rental dat\",'MM/DD/YYYY') >= '"+startDate+"'"
     +" AND to_date(\"rental dat\",'MM/DD/YYYY') <= '"+endDate+"'"
     +" ORDER BY random() LIMIT 10000;"
-  sequelize.query(query).then(bikefacilities => {
+  */
+  var query = "(SELECT count(latitude) OVER() as full_count, latitude, longitude, \"rental dat\" FROM bikeshare WHERE ST_Contains(ST_MakeEnvelope("
+    +bounds[0]+", "+bounds[1]+","+bounds[2]+", "+bounds[3]+", 4326), geom)"
+    +" AND to_date(\"rental dat\",'MM/DD/YYYY') >= '"+startDate+"'"
+    +" AND to_date(\"rental dat\",'MM/DD/YYYY') <= '"+endDate+"'"
+    +" ORDER BY random(), full_count ASC LIMIT 10000)"
+    +" UNION (SELECT count(latitude) OVER() as full_count, latitude, longitude, \"rental dat\" FROM bikeshare WHERE"
+    +" to_date(\"rental dat\",'MM/DD/YYYY') >= '"+startDate+"'"
+    +" AND to_date(\"rental dat\",'MM/DD/YYYY') <= '"+endDate+"'"
+    +" ORDER BY random(), full_count ASC LIMIT 1);"
+  sequelize.query(query).then(bcycleData => {
     res.status(200).send({
-      data: bikefacilities,
+      data: bcycleData,
     })
   })
 
@@ -79,12 +90,11 @@ app.get('/api/bikefacilities', function(req, res){
 });
 
 
-if (process.env.NODE_ENV === 'production') {
   app.route('/*')
     .get(function(req, res){
       res.sendFile('./client/build/index.html');
     });
-};
+
 
 
 // This will be our application entry. We'll setup our server here.

@@ -7,12 +7,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
 import GroupIcon from '@material-ui/icons/Group';
 import HeatIcon from '@material-ui/icons/Whatshot';
 import ChartIcon from '@material-ui/icons/InsertChart';
-import ImageIcon from '@material-ui/icons/Image';
 import CityIcon from '@material-ui/icons/Domain';
 import BikeIcon from '@material-ui/icons/DirectionsBike';
 
